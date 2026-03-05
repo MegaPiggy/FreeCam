@@ -107,6 +107,7 @@ class MainClass : ModBehaviour
 		if (InFreeCam && camera != _owCamera)
 		{
 			InFreeCam = false;
+			Write($"Changing back to stored input mode {_storedMode}");
 			if (_storedMode == InputMode.None)
 			{
 				_storedMode = InputMode.Character;
@@ -116,6 +117,7 @@ class MainClass : ModBehaviour
 		else if (!InFreeCam && camera == _owCamera)
 		{
 			InFreeCam = true;
+			Write($"Storing input mode {_storedMode}");
 			_storedMode = OWInput.GetInputMode();
 			OWInput.ChangeInputMode(InputMode.None);
 		}
@@ -125,6 +127,7 @@ class MainClass : ModBehaviour
 	{
 		if (InFreeCam)
 		{
+			Write("Exiting free cam");
 			_instance._commonCameraAPI.ExitCamera(_instance._owCamera);
 
 			// Only re-enable the helmet HUD if we aren't already hiding the GUI
@@ -135,6 +138,7 @@ class MainClass : ModBehaviour
 		}
 		else
 		{
+			Write("Entering free cam");
 			_instance._commonCameraAPI.EnterCamera(_instance._owCamera);
 			_instance._hud.SetActive(false);
 		}
@@ -158,12 +162,21 @@ class MainClass : ModBehaviour
 
 	public static void ToggleHUD()
 	{
-		GUIMode.SetRenderMode(GUIMode.IsHiddenMode() ? GUIMode.RenderMode.FPS : GUIMode.RenderMode.Hidden);
-
-		// Turning the HUD back on while in free cam also shows the helmet HUD, which we don't want
-		if (!GUIMode.IsHiddenMode() && InFreeCam)
+		if (GUIMode.IsHiddenMode())
 		{
-			_instance._hud.SetActive(false);
+			Write("Showing HUD");
+			GUIMode.SetRenderMode(GUIMode.RenderMode.FPS);
+
+			// Turning the HUD back on while in free cam also shows the helmet HUD, which we don't want
+			if (InFreeCam)
+			{
+				_instance._hud.SetActive(false);
+			}
+		}
+		else
+		{
+			Write("Hiding HUD");
+			GUIMode.SetRenderMode(GUIMode.RenderMode.Hidden);
 		}
 	}
 
