@@ -21,10 +21,7 @@ public class CustomLookAround : MonoBehaviour
 
     void Update()
     {
-        if (OWInput.GetInputMode() != InputMode.None)
-        {
-            return;
-        }
+        if (OWTime.IsPaused() || OWInput.GetInputMode() != InputMode.None) return;
 
         var scrollInOut =
             Math.Max(-1f, Math.Min(1f, Mouse.current.scroll.y.ReadValue())) +

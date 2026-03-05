@@ -47,6 +47,8 @@ public class FreeCamController : MonoBehaviour
 
     public void Update()
     {
+        if (OWTime.IsPaused()) return;
+
         if (Keyboard.current[Key.NumpadDivide].wasPressedThisFrame || Keyboard.current[Key.Comma].wasPressedThisFrame)
         {
             Time.timeScale = 0f;
