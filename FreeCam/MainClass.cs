@@ -140,6 +140,22 @@ class MainClass : ModBehaviour
 		}
 	}
 
+	public static void EnterFreeCam()
+	{
+		if (!InFreeCam)
+		{
+			ToggleFreeCam();
+		}
+	}
+
+	public static void ExitFreeCam()
+	{
+		if (InFreeCam)
+		{
+			ToggleFreeCam();
+		}
+	}
+
 	public static void ToggleHUD()
 	{
 		GUIMode.SetRenderMode(GUIMode.IsHiddenMode() ? GUIMode.RenderMode.FPS : GUIMode.RenderMode.Hidden);

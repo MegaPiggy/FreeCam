@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -31,6 +32,16 @@ public class FreeCamController : MonoBehaviour
     public const Key ReparentKey = Key.Y;
 
     public static bool HoldingTeleport { get; private set; }
+
+    public void Awake()
+    {
+        OWTime.OnPause += OnPause;
+    }
+
+    private void OnPause(OWTime.PauseType pauseType)
+    {
+        MainClass.ExitFreeCam();
+    }
 
     public void Start() => ParentToPlayer(true);
 
