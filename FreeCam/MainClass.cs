@@ -182,4 +182,9 @@ class MainClass : ModBehaviour
 
 	public static void Write(string msg) => _instance.ModHelper.Console.WriteLine($"[FreeCam] : {msg}", MessageType.Info);
 	public static void WriteError(string msg) => _instance.ModHelper.Console.WriteLine($"[FreeCam] : {msg}", MessageType.Error);
+
+	public override object GetApi()
+	{
+		return new FreeCamAPI();
+	}
 }
