@@ -24,7 +24,7 @@ public class PromptController : MonoBehaviour
     private static readonly UIInputCommands _rangeDown = new("FREECAM - RangeDown", KeyCode.LeftBracket);
     private static readonly UIInputCommands _rangeUp = new("FREECAM - RangeUp", KeyCode.RightBracket);
 
-    private void Start()
+    public void Start()
     {
         _customFlashlight = GetComponent<CustomFlashlight>();
         _customLookAround = GetComponent<CustomLookAround>();
@@ -68,7 +68,7 @@ public class PromptController : MonoBehaviour
         ];
     }
 
-    private void Update()
+    public void Update()
     {
         var visible = !OWTime.IsPaused() && !GUIMode.IsHiddenMode() && PlayerData.GetPromptsEnabled() && MainClass.ShowPrompts;
 

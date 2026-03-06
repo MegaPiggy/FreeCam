@@ -17,9 +17,9 @@ public class CustomLookAround : MonoBehaviour
         get { return _moveSpeed; }
     }
 
-    void Start() => Cursor.lockState = CursorLockMode.Locked;
+    public void Start() => Cursor.lockState = CursorLockMode.Locked;
 
-    void Update()
+    public void Update()
     {
         if (OWTime.IsPaused() || OWInput.GetInputMode() != InputMode.None) return;
 

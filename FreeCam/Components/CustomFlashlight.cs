@@ -17,7 +17,7 @@ public class CustomFlashlight : MonoBehaviour
 
     private OWCamera _owCamera;
 
-    void Start()
+    public void Start()
     {
         _light = gameObject.AddComponent<Light>();
         _light.range = _range;
@@ -29,7 +29,7 @@ public class CustomFlashlight : MonoBehaviour
         GlobalMessenger<OWCamera>.AddListener("SwitchActiveCamera", OnSwitchActiveCamera);
     }
 
-    void OnDestroy()
+    public void OnDestroy()
     {
         GlobalMessenger<OWCamera>.RemoveListener("SwitchActiveCamera", OnSwitchActiveCamera);
     }
@@ -42,7 +42,7 @@ public class CustomFlashlight : MonoBehaviour
         }
     }
 
-    void Update()
+    public void Update()
     {
         if (Locator.GetActiveCamera() != _owCamera) return;
 

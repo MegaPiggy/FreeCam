@@ -53,7 +53,7 @@ class MainClass : ModBehaviour
 		SceneManager.sceneLoaded += OnSceneLoaded;
 	}
 
-	void OnDestroy()
+	public void OnDestroy()
 	{
 		GlobalMessenger<OWCamera>.RemoveListener("SwitchActiveCamera", OnSwitchActiveCamera);
 
