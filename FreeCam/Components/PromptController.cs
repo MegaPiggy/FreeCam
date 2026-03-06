@@ -28,7 +28,7 @@ public class PromptController : MonoBehaviour
     {
         _customFlashlight = GetComponent<CustomFlashlight>();
         _customLookAround = GetComponent<CustomLookAround>();
-        
+
         // Top right
         _togglePrompt = AddPrompt("Toggle FreeCam", PromptPosition.UpperLeft, FreeCamController.ToggleKey);
         _guiPrompt = AddPrompt("Hide HUD", PromptPosition.UpperLeft, FreeCamController.GUIKey);

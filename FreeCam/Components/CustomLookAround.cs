@@ -13,7 +13,8 @@ public class CustomLookAround : MonoBehaviour
     private float _moveZ;
 
     private float _moveSpeed = 5f;
-    public float MoveSpeed {
+    public float MoveSpeed
+    {
         get { return _moveSpeed; }
     }
 
@@ -34,7 +35,7 @@ public class CustomLookAround : MonoBehaviour
         }
 
         var lookRate = OWInput.UsingGamepad() ? PlayerCameraController.GAMEPAD_LOOK_RATE_Y : PlayerCameraController.LOOK_RATE;
-        
+
         // Possibly this should use the ship input version? Since the freecam controls are more like flight
         var look = OWInput.GetAxisValue(InputLibrary.look, InputMode.All);
         _degreesY = look.y * lookRate * Time.unscaledDeltaTime;
@@ -46,10 +47,12 @@ public class CustomLookAround : MonoBehaviour
 
         _moveY = (OWInput.GetValue(InputLibrary.thrustUp) - OWInput.GetValue(InputLibrary.thrustDown)) * _moveSpeed * Time.unscaledDeltaTime;
 
-        if (OWInput.IsPressed(InputLibrary.rollMode)) {
+        if (OWInput.IsPressed(InputLibrary.rollMode))
+        {
             transform.Rotate(Vector3.forward, -_degreesX);
         }
-        else {
+        else
+        {
             transform.Rotate(Vector3.up, _degreesX);
         }
         transform.Rotate(Vector3.right, -_degreesY);

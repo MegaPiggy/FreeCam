@@ -99,7 +99,8 @@ public class FreeCamController : MonoBehaviour
     {
         var playerCameraTransform = Locator.GetPlayerCamera().transform;
         transform.parent = playerCameraTransform;
-        if (warp) {
+        if (warp)
+        {
             transform.position = playerCameraTransform.position;
             transform.rotation = playerCameraTransform.rotation;
         }
@@ -109,7 +110,8 @@ public class FreeCamController : MonoBehaviour
     {
         var astroObjectTransform = astroObject.gameObject.transform;
         transform.parent = astroObjectTransform;
-        if (warp) {
+        if (warp)
+        {
             transform.position = astroObjectTransform.position;
         }
     }
