@@ -17,6 +17,7 @@ class MainClass : ModBehaviour
 
 	public static bool InFreeCam { get; private set; }
 	public static bool ShowPrompts { get; private set; }
+	public static bool ShowTogglePrompt { get; private set; }
 
 	private InputMode _storedMode;
 	private int _fov;
@@ -65,6 +66,7 @@ class MainClass : ModBehaviour
 		_fov = config.GetSettingsValue<int>("FOV");
 		_nearClipPlane = config.GetSettingsValue<int>("Near Clip Plane Distance");
 		ShowPrompts = !config.GetSettingsValue<bool>("Hide Prompts");
+		ShowTogglePrompt = !config.GetSettingsValue<bool>("Hide Toggle Prompt");
 
 		// If the mod is currently active we can set these immediately
 		if (_camera != null)

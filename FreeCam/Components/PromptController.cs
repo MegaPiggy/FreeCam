@@ -70,45 +70,47 @@ public class PromptController : MonoBehaviour
 
     public void Update()
     {
-        var visible = !OWTime.IsPaused() && !GUIMode.IsHiddenMode() && PlayerData.GetPromptsEnabled() && MainClass.ShowPrompts;
+        var baseVisible = !OWTime.IsPaused() && !GUIMode.IsHiddenMode() && PlayerData.GetPromptsEnabled();
+        var toggleVisible = baseVisible && MainClass.ShowTogglePrompt;
+        var otherVisible = baseVisible && MainClass.ShowPrompts && MainClass.InFreeCam;
 
         // Top right
-        _togglePrompt.SetVisibility(visible);
-        _guiPrompt.SetVisibility(visible && MainClass.InFreeCam);
+        _togglePrompt.SetVisibility(toggleVisible);
+        _guiPrompt.SetVisibility(otherVisible);
 
         var usingGamepad = Locator.GetPromptManager()._usingGamepad;
-        _scrollPromptGamepad.SetVisibility(visible && MainClass.InFreeCam && usingGamepad);
-        _scrollPromptKeyboard.SetVisibility(visible && MainClass.InFreeCam && !usingGamepad);
+        _scrollPromptGamepad.SetVisibility(otherVisible && usingGamepad);
+        _scrollPromptKeyboard.SetVisibility(otherVisible && !usingGamepad);
 
-        _speedPrompt.SetVisibility(visible && MainClass.InFreeCam);
+        _speedPrompt.SetVisibility(otherVisible);
         var moveSpeed = _customLookAround.MoveSpeed;
         string moveSpeedString;
         if (moveSpeed < 0.01f || moveSpeed > 100f) { moveSpeedString = moveSpeed.ToString("0.000e0"); }
         else { moveSpeedString = moveSpeed.ToString("0.000"); }
         _speedPrompt.SetText("Speed: " + moveSpeedString + " m/s");
 
-        _rotatePrompt.SetVisibility(visible && MainClass.InFreeCam);
-        _lookPrompt.SetVisibility(visible && MainClass.InFreeCam);
-        _horizontalPrompt.SetVisibility(visible && MainClass.InFreeCam);
-        _verticalPrompt.SetVisibility(visible && MainClass.InFreeCam);
+        _rotatePrompt.SetVisibility(otherVisible);
+        _lookPrompt.SetVisibility(otherVisible);
+        _horizontalPrompt.SetVisibility(otherVisible);
+        _verticalPrompt.SetVisibility(otherVisible);
 
         // Top left
-        _teleportOptions.SetVisibility(visible && MainClass.InFreeCam);
-        _centerPlayerPrompt.SetVisibility(visible && MainClass.InFreeCam && FreeCamController.HoldingTeleport);
+        _teleportOptions.SetVisibility(otherVisible);
+        _centerPlayerPrompt.SetVisibility(otherVisible && FreeCamController.HoldingTeleport);
         foreach (var planetPrompt in _planetPrompts)
         {
-            planetPrompt.SetVisibility(visible && MainClass.InFreeCam && FreeCamController.HoldingTeleport);
+            planetPrompt.SetVisibility(otherVisible && FreeCamController.HoldingTeleport);
         }
 
         // Flashlight
-        _flashlightPrompt.SetVisibility(visible && MainClass.InFreeCam);
-        _flashlightRangePrompt.SetVisibility(visible && MainClass.InFreeCam && _customFlashlight.FlashlightOn());
-        _flashlightSpeedPrompt.SetVisibility(visible && MainClass.InFreeCam && _customFlashlight.FlashlightOn());
+        _flashlightPrompt.SetVisibility(otherVisible);
+        _flashlightRangePrompt.SetVisibility(otherVisible && _customFlashlight.FlashlightOn());
+        _flashlightSpeedPrompt.SetVisibility(otherVisible && _customFlashlight.FlashlightOn());
 
         // Time
         foreach (var prompt in _timePrompts)
         {
-            prompt.SetVisibility(visible && MainClass.InFreeCam);
+            prompt.SetVisibility(otherVisible);
         }
     }
 
