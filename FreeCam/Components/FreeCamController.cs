@@ -49,6 +49,13 @@ public class FreeCamController : MonoBehaviour
     {
         if (OWTime.IsPaused()) return;
 
+        if (Keyboard.current[ToggleKey].wasPressedThisFrame || Keyboard.current[ToggleKeyAlt].wasPressedThisFrame)
+        {
+            MainClass.ToggleFreeCam();
+        }
+
+        if (!MainClass.InFreeCam) return;
+
         if (Keyboard.current[Key.NumpadDivide].wasPressedThisFrame || Keyboard.current[Key.Comma].wasPressedThisFrame)
         {
             Time.timeScale = 0f;
@@ -87,11 +94,6 @@ public class FreeCamController : MonoBehaviour
         if (Keyboard.current[GUIKey].wasPressedThisFrame)
         {
             MainClass.ToggleHUD();
-        }
-
-        if (Keyboard.current[ToggleKey].wasPressedThisFrame || Keyboard.current[ToggleKeyAlt].wasPressedThisFrame)
-        {
-            MainClass.ToggleFreeCam();
         }
     }
 

@@ -115,6 +115,8 @@ class MainClass : ModBehaviour
 				_storedMode = InputMode.Character;
 			}
 			OWInput.ChangeInputMode(_storedMode);
+			ResetTimeScale();
+			ShowHUD();
 		}
 		else if (!InFreeCam && camera == _owCamera)
 		{
@@ -123,6 +125,11 @@ class MainClass : ModBehaviour
 			_storedMode = OWInput.GetInputMode();
 			OWInput.ChangeInputMode(InputMode.None);
 		}
+	}
+
+	public static void ResetTimeScale()
+	{
+		Time.timeScale = OWTime.IsPaused() ? 0 : OWTime.GetTimeScale();
 	}
 
 	public static void ToggleFreeCam()
@@ -179,6 +186,22 @@ class MainClass : ModBehaviour
 		{
 			Write("Hiding HUD");
 			GUIMode.SetRenderMode(GUIMode.RenderMode.Hidden);
+		}
+	}
+
+	public static void ShowHUD()
+	{
+		if (GUIMode.IsHiddenMode())
+		{
+			ToggleHUD();
+		}
+	}
+
+	public static void HideHUD()
+	{
+		if (!GUIMode.IsHiddenMode())
+		{
+			ToggleHUD();
 		}
 	}
 
