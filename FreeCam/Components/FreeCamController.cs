@@ -36,6 +36,13 @@ public class FreeCamController : MonoBehaviour
     public void Awake()
     {
         OWTime.OnPause += OnPause;
+        MainClass.OnFreeCamEntered.AddListener(ResetParent);
+    }
+
+    public void OnDestroy()
+    {
+        OWTime.OnPause -= OnPause;
+        MainClass.OnFreeCamEntered.RemoveListener(ResetParent);
     }
 
     private void OnPause(OWTime.PauseType pauseType)
@@ -43,7 +50,7 @@ public class FreeCamController : MonoBehaviour
         MainClass.ExitFreeCam();
     }
 
-    public void Start() => ParentToPlayer(true);
+    public void Start() => ResetParent();
 
     public void Update()
     {
@@ -95,6 +102,11 @@ public class FreeCamController : MonoBehaviour
         {
             MainClass.ToggleHUD();
         }
+    }
+
+    public void ResetParent()
+    {
+        ParentToPlayer(true);
     }
 
     public void ParentToPlayer(bool warp = false)
