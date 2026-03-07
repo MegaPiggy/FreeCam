@@ -37,15 +37,22 @@ public class FreeCamController : MonoBehaviour
     {
         OWTime.OnPause += OnPause;
         MainClass.OnFreeCamEntered.AddListener(OnFreeCamEntered);
+        GlobalMessenger<bool>.AddListener("StartSleepingAtCampfire", OnStartSleeping);
     }
 
     public void OnDestroy()
     {
         OWTime.OnPause -= OnPause;
         MainClass.OnFreeCamEntered.RemoveListener(OnFreeCamEntered);
+        GlobalMessenger<bool>.RemoveListener("StartSleepingAtCampfire", OnStartSleeping);
     }
 
     private void OnPause(OWTime.PauseType pauseType)
+    {
+        MainClass.ExitFreeCam();
+    }
+
+    private void OnStartSleeping(bool dreamFire)
     {
         MainClass.ExitFreeCam();
     }
