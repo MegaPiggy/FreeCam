@@ -20,6 +20,12 @@
       "value": 1,
       "tooltip": "Minimum distance away from camera at which objects are rendered."
     },
+    "Reset Parent": {
+      "title": "Reset Parent",
+      "type": "toggle",
+      "value": true,
+      "tooltip": "Whether the free cam will reparent itself to the player every time you toggle it on."
+    },
     "Prompts": {
       "type": "separator",
       "title": "Button Prompt Settings"

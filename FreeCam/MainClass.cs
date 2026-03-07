@@ -23,6 +23,7 @@ class MainClass : ModBehaviour
 
 	public static bool ShowPrompts { get; private set; }
 	public static bool ShowTogglePrompt { get; private set; }
+	public static bool ResetParent { get; private set; }
 
 	private InputMode _storedMode;
 	private int _fov;
@@ -72,6 +73,7 @@ class MainClass : ModBehaviour
 		_nearClipPlane = config.GetSettingsValue<int>("Near Clip Plane Distance");
 		ShowPrompts = !config.GetSettingsValue<bool>("Hide Prompts");
 		ShowTogglePrompt = !config.GetSettingsValue<bool>("Hide Toggle Prompt");
+		ResetParent = config.GetSettingsValue<bool>("Reset Parent");
 
 		// If the mod is currently active we can set these immediately
 		if (_camera != null)

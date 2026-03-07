@@ -52,7 +52,10 @@ public class FreeCamController : MonoBehaviour
 
     private void OnFreeCamEntered()
     {
-        ResetParent();
+        if (MainClass.ResetParent)
+        {
+            ResetParent();
+        }
     }
 
     public void Start() => ResetParent();
