@@ -36,18 +36,23 @@ public class FreeCamController : MonoBehaviour
     public void Awake()
     {
         OWTime.OnPause += OnPause;
-        MainClass.OnFreeCamEntered.AddListener(ResetParent);
+        MainClass.OnFreeCamEntered.AddListener(OnFreeCamEntered);
     }
 
     public void OnDestroy()
     {
         OWTime.OnPause -= OnPause;
-        MainClass.OnFreeCamEntered.RemoveListener(ResetParent);
+        MainClass.OnFreeCamEntered.RemoveListener(OnFreeCamEntered);
     }
 
     private void OnPause(OWTime.PauseType pauseType)
     {
         MainClass.ExitFreeCam();
+    }
+
+    private void OnFreeCamEntered()
+    {
+        ResetParent();
     }
 
     public void Start() => ResetParent();
