@@ -8,7 +8,8 @@ namespace FreeCam.Components;
 public class PromptController : MonoBehaviour
 {
     private ScreenPrompt
-        _togglePrompt, _guiPrompt, _teleportOptions, _centerPlayerPrompt,
+        _togglePrompt, _guiPrompt,
+        _teleportOptions, _reparentOptions, _centerPlayerPrompt,
         _scrollPromptKeyboard, _scrollPromptGamepad, _speedPrompt,
         _rotatePrompt, _horizontalPrompt, _verticalPrompt, _lookPrompt,
         _flashlightPrompt, _flashlightRangePrompt, _flashlightSpeedPrompt;
@@ -29,7 +30,7 @@ public class PromptController : MonoBehaviour
         _customFlashlight = GetComponent<CustomFlashlight>();
         _customLookAround = GetComponent<CustomLookAround>();
 
-        // Top right
+        // Top Left
         _togglePrompt = AddPrompt("Toggle FreeCam", PromptPosition.UpperLeft, FreeCamController.ToggleKey);
         _guiPrompt = AddPrompt("Hide HUD", PromptPosition.UpperLeft, FreeCamController.GUIKey);
 
@@ -46,8 +47,21 @@ public class PromptController : MonoBehaviour
         _horizontalPrompt = AddPrompt(UITextLibrary.GetString(UITextType.MovePrompt) + "   <CMD>", PromptPosition.UpperLeft, InputLibrary.moveXZ);
         _verticalPrompt = AddPrompt("Up/Down   <CMD>", PromptPosition.UpperLeft, [InputLibrary.thrustUp, InputLibrary.thrustDown], ScreenPrompt.MultiCommandType.POS_NEG);
 
-        // Top Left
-        _teleportOptions = AddPrompt("Parent options   <CMD>" + UITextLibrary.GetString(UITextType.HoldPrompt), PromptPosition.UpperRight, FreeCamController.TeleportKey);
+        // Flashlight
+        _flashlightPrompt = AddPrompt(UITextLibrary.GetString(UITextType.FlashlightPrompt) + "   <CMD>" + UITextLibrary.GetString(UITextType.PressPrompt), PromptPosition.UpperLeft, InputLibrary.flashlight);
+        _flashlightRangePrompt = AddPrompt("Flashlight range   <CMD1> <CMD2>", PromptPosition.UpperLeft, [_rangeDown, _rangeUp], ScreenPrompt.MultiCommandType.CUSTOM_BOTH);
+        _flashlightSpeedPrompt = AddPrompt("Adjust range faster   <CMD>" + UITextLibrary.GetString(UITextType.HoldPrompt), PromptPosition.UpperLeft, Key.RightShift);
+
+        // Time
+        _timePrompts = [
+            AddPrompt("0% game speed", PromptPosition.LowerLeft, Key.Comma),
+            AddPrompt("50% game speed", PromptPosition.LowerLeft, Key.Period),
+            AddPrompt("100% game speed", PromptPosition.LowerLeft, Key.Slash)
+        ];
+
+        // Top Right
+        _teleportOptions = AddPrompt("Teleport options   <CMD>" + UITextLibrary.GetString(UITextType.HoldPrompt), PromptPosition.UpperRight, FreeCamController.TeleportKey);
+        _reparentOptions = AddPrompt("Parent options   <CMD>" + UITextLibrary.GetString(UITextType.HoldPrompt), PromptPosition.UpperRight, FreeCamController.ReparentKey);
         _centerPlayerPrompt = AddPrompt("Player", PromptPosition.UpperRight, FreeCamController.CenterOnPlayerKey);
 
         _planetPrompts = [];
@@ -55,17 +69,6 @@ public class PromptController : MonoBehaviour
         {
             _planetPrompts.Add(AddPrompt(AstroObject.AstroObjectNameToString(planet), PromptPosition.UpperRight, FreeCamController.CenterOnPlanetKey[planet].key));
         }
-
-        // Flashlight
-        _flashlightPrompt = AddPrompt(UITextLibrary.GetString(UITextType.FlashlightPrompt) + "   <CMD>" + UITextLibrary.GetString(UITextType.PressPrompt), PromptPosition.UpperLeft, InputLibrary.flashlight);
-        _flashlightRangePrompt = AddPrompt("Flashlight range   <CMD1> <CMD2>", PromptPosition.UpperLeft, [_rangeDown, _rangeUp], ScreenPrompt.MultiCommandType.CUSTOM_BOTH);
-        _flashlightSpeedPrompt = AddPrompt("Adjust range faster   <CMD>" + UITextLibrary.GetString(UITextType.HoldPrompt), PromptPosition.UpperLeft, Key.RightShift);
-
-        _timePrompts = [
-            AddPrompt("0% game speed", PromptPosition.LowerLeft, Key.Comma),
-            AddPrompt("50% game speed", PromptPosition.LowerLeft, Key.Period),
-            AddPrompt("100% game speed", PromptPosition.LowerLeft, Key.Slash)
-        ];
     }
 
     public void Update()
@@ -74,7 +77,7 @@ public class PromptController : MonoBehaviour
         var toggleVisible = baseVisible && MainClass.ShowTogglePrompt;
         var otherVisible = baseVisible && MainClass.ShowPrompts && MainClass.InFreeCam;
 
-        // Top right
+        // Top Left
         _togglePrompt.SetVisibility(toggleVisible);
         _guiPrompt.SetVisibility(otherVisible);
 
@@ -94,14 +97,6 @@ public class PromptController : MonoBehaviour
         _horizontalPrompt.SetVisibility(otherVisible);
         _verticalPrompt.SetVisibility(otherVisible);
 
-        // Top left
-        _teleportOptions.SetVisibility(otherVisible);
-        _centerPlayerPrompt.SetVisibility(otherVisible && FreeCamController.HoldingTeleport);
-        foreach (var planetPrompt in _planetPrompts)
-        {
-            planetPrompt.SetVisibility(otherVisible && FreeCamController.HoldingTeleport);
-        }
-
         // Flashlight
         _flashlightPrompt.SetVisibility(otherVisible);
         _flashlightRangePrompt.SetVisibility(otherVisible && _customFlashlight.FlashlightOn());
@@ -111,6 +106,15 @@ public class PromptController : MonoBehaviour
         foreach (var prompt in _timePrompts)
         {
             prompt.SetVisibility(otherVisible);
+        }
+
+        // Top Right
+        _teleportOptions.SetVisibility(otherVisible);
+        _reparentOptions.SetVisibility(otherVisible);
+        _centerPlayerPrompt.SetVisibility(otherVisible && FreeCamController.HoldingTeleport);
+        foreach (var planetPrompt in _planetPrompts)
+        {
+            planetPrompt.SetVisibility(otherVisible && FreeCamController.HoldingTeleport);
         }
     }
 
