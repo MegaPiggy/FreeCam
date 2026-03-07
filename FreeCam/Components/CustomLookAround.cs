@@ -18,6 +18,16 @@ public class CustomLookAround : MonoBehaviour
         get { return _moveSpeed; }
     }
 
+    public void Awake()
+    {
+        MainClass.OnFreeCamEntered.AddListener(ResetMoveSpeed);
+    }
+
+    public void OnDestroy()
+    {
+        MainClass.OnFreeCamEntered.RemoveListener(ResetMoveSpeed);
+    }
+
     public void Start() => Cursor.lockState = CursorLockMode.Locked;
 
     public void Update()
@@ -31,7 +41,7 @@ public class CustomLookAround : MonoBehaviour
 
         if (Keyboard.current[Key.DownArrow].wasPressedThisFrame)
         {
-            _moveSpeed = 5f;
+            ResetMoveSpeed();
         }
 
         var lookRate = OWInput.UsingGamepad() ? PlayerCameraController.GAMEPAD_LOOK_RATE_Y : PlayerCameraController.LOOK_RATE;
@@ -70,5 +80,10 @@ public class CustomLookAround : MonoBehaviour
         {
             transform.Rotate(Vector3.forward, -(float)Math.Log(_moveSpeed * 0.1f + 1));
         }
+    }
+
+    public void ResetMoveSpeed()
+    {
+        _moveSpeed = 5f;
     }
 }
