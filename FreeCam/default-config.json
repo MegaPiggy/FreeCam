@@ -2,9 +2,8 @@
   "$schema": "https://raw.githubusercontent.com/ow-mods/owml/master/schemas/config_schema.json",
   "enabled": true,
   "settings": {
-    "Camera": {
-      "type": "separator",
-      "title": "Camera Settings"
+    "CameraSeparator": {
+      "type": "separator"
     },
     "FOV": {
       "title": "FOV",
@@ -26,9 +25,8 @@
       "value": true,
       "tooltip": "Whether the free cam will reparent itself to the player every time you toggle it on."
     },
-    "Prompts": {
-      "type": "separator",
-      "title": "Button Prompt Settings"
+    "PromptsSeparator": {
+      "type": "separator"
     },
     "Hide Prompts": {
       "title": "Hide Button Prompts",
