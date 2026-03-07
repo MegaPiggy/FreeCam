@@ -5,6 +5,7 @@ using OWML.ModHelper;
 using System;
 using System.Reflection;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.SceneManagement;
 
 namespace FreeCam;
@@ -15,7 +16,11 @@ class MainClass : ModBehaviour
 	private Camera _camera;
 	private OWCamera _owCamera;
 
+	public static UnityEvent OnFreeCamEntered = new();
+	public static UnityEvent OnFreeCamExited = new();
+
 	public static bool InFreeCam { get; private set; }
+
 	public static bool ShowPrompts { get; private set; }
 	public static bool ShowTogglePrompt { get; private set; }
 
@@ -117,6 +122,14 @@ class MainClass : ModBehaviour
 			OWInput.ChangeInputMode(_storedMode);
 			ResetTimeScale();
 			ShowHUD();
+			try
+			{
+				OnFreeCamExited?.Invoke();
+			}
+			catch (Exception e)
+			{
+				WriteError($"Error invoking OnFreeCamExited event: {e}");
+			}
 		}
 		else if (!InFreeCam && camera == _owCamera)
 		{
@@ -124,6 +137,14 @@ class MainClass : ModBehaviour
 			Write($"Storing input mode {_storedMode}");
 			_storedMode = OWInput.GetInputMode();
 			OWInput.ChangeInputMode(InputMode.None);
+			try
+			{
+				OnFreeCamEntered?.Invoke();
+			}
+			catch (Exception e)
+			{
+				WriteError($"Error invoking OnFreeCamEntered event: {e}");
+			}
 		}
 	}
 
