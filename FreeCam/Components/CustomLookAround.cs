@@ -22,7 +22,7 @@ public class CustomLookAround : MonoBehaviour
 
     public void Update()
     {
-        if (OWTime.IsPaused() || OWInput.GetInputMode() != InputMode.None) return;
+        if (OWTime.IsPaused() || !MainClass.InFreeCam) return;
 
         var scrollInOut =
             Math.Max(-1f, Math.Min(1f, Mouse.current.scroll.y.ReadValue())) +
