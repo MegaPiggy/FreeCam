@@ -81,16 +81,19 @@ public class FreeCamController : MonoBehaviour
         if (Keyboard.current[Key.NumpadDivide].wasPressedThisFrame || Keyboard.current[Key.Comma].wasPressedThisFrame)
         {
             Time.timeScale = 0f;
+            Locator.GetMenuAudioController().PlayButtonFocus();
         }
 
         if (Keyboard.current[Key.NumpadMultiply].wasPressedThisFrame || Keyboard.current[Key.Period].wasPressedThisFrame)
         {
             Time.timeScale = 0.5f;
+            Locator.GetMenuAudioController().PlayButtonFocus();
         }
 
         if (Keyboard.current[Key.NumpadMinus].wasPressedThisFrame || Keyboard.current[Key.Slash].wasPressedThisFrame)
         {
             Time.timeScale = 1f;
+            Locator.GetMenuAudioController().PlayButtonFocus();
         }
 
         HoldingTeleport = false;
